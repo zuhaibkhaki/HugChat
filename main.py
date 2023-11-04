@@ -8,7 +8,8 @@ st.set_page_config(page_title="🤗💬 HugChat")
 # Hugging Face Credentials
 with st.sidebar:
     st.title('🤗💬 HugChat')
-    st.markdown('To start using the app, provide your HuggingFace credentials(Email & Password) below:')
+    new_title = '<p style="font-family:sans-serif; color:Green; font-size: 12px;">To start using the app, provide your HuggingFace credentials(Email & Password) below:</p>'
+    st.markdown(new_title, unsafe_allow_html=True)
     if ('EMAIL' in st.secrets) and ('PASS' in st.secrets):
         st.success('HuggingFace Login credentials already provided!', icon='✅')
         hf_email = st.secrets['EMAIL']
