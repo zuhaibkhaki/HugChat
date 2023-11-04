@@ -33,12 +33,21 @@ for message in st.session_state.messages:
 
 # Function for generating LLM response
 def generate_response(prompt_input, email, passwd):
-    # Hugging Face Login
-    sign = Login(email, passwd)
-    cookies = sign.login()
-    # Create ChatBot                        
-    chatbot = hugchat.ChatBot(cookies=cookies.get_dict())
-    return chatbot.chat(prompt_input)
+    file_path = f'usercookies/{email}.json'
+    cookie_path_dir = "./cookies_snapshot"
+    if os.path.exists(file_path):
+        sign = login(email, None)
+        cookies = sign.loadCookiesFromDir(cookie_path_dir) # This will detect if the JSON file exists, return cookies if it does and raise an Exception if it's not.
+        # Create a ChatBot
+        chatbot = hugchat.ChatBot(cookie_path=file_path)
+        return chatbot.chat(prompt_input)
+    else:
+        # Hugging Face Login
+        sign = Login(email, passwd)
+        cookies = sign.login()
+        # Create ChatBot                        
+        chatbot = hugchat.ChatBot(cookies=cookies.get_dict())
+        return chatbot.chat(prompt_input)
 
 # User-provided prompt
 if prompt := st.chat_input(disabled=not (hf_email and hf_pass)):
