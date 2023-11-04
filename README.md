@@ -1,4 +1,4 @@
-# 📦 Name and Cuisine Generator
+# 📦 HugChat App
 
 Description of the app ...
 
